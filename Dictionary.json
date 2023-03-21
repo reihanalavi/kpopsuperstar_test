@@ -1,0 +1,30 @@
+{
+    "c2dictionary": true,
+    "data": {
+        "PLAY": 0,
+        "SOUND": 1,
+        "MUSIC": 2,
+        "GAME OVER": 3,
+        "BEST": 4,
+        "SCORE": 5,
+        "CREDITS": 6,
+        "PAUSE": 7,
+        "COINS": 8,
+        "SHOP": 9,
+        "SETTINGS": 10,
+        "USE": 11,
+        "EQUIPPED": 12,
+        "BUY": 13,
+        "BACK": 14,
+        "RESTART": 15,
+        "MENU": 16,
+        "SKINS": 17,
+        "BONUS": 18,
+        "UPGRADE": 19,
+        "MAX LEVEL": 20,
+        "TIMER BONUS": 21,
+        "PAPARAZZI BONUS": 22,
+        "SECONDS": 23,
+        "UPGRADE TO": 24
+    }
+}
