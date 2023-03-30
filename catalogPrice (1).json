@@ -1,0 +1,69 @@
+{
+    "c2dictionary": true,
+    "data": {
+        "skin": [
+            5,
+            10,
+            15, 20, 25, 30, 35, 40, 45, 50
+        ],
+        "timer_bonus": {
+            "level_1": {
+                "price": 20,
+                "min_range": 3,
+                "max_range": 5,
+                "upgradeable": true
+            },
+            "level_2": {
+                "price": 40,
+                "min_range": 5,
+                "max_range": 7,
+                "upgradeable": true
+            },
+            "level_3": {
+                "price": 60,
+                "min_range": 7,
+                "max_range": 9,
+                "upgradeable": true
+            },
+            "level_4": {
+                "price": 80,
+                "min_range": 9,
+                "max_range": 11,
+                "upgradeable": true
+            },
+            "level_5": {
+                "price": 100,
+                "min_range": 11,
+                "max_range": 15,
+                "upgradeable": false
+            }
+        },
+        "paparazzi_bonus": {
+            "level_1": {
+                "price": 30,
+                "bonus": 1,
+                "upgradeable": true
+            },
+            "level_2": {
+                "price": 50,
+                "bonus": 2,
+                "upgradeable": true
+            },
+            "level_3": {
+                "price": 75,
+                "bonus": 3,
+                "upgradeable": true
+            },
+            "level_4": {
+                "price": 90,
+                "bonus": 4,
+                "upgradeable": true
+            },
+            "level_5": {
+                "price": 100,
+                "bonus": 5,
+                "upgradeable": false
+            }
+        }
+    }
+}

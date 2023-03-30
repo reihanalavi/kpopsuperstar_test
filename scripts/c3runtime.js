@@ -5476,28 +5476,34 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.OnCreated,
 		C3.Plugins.Text.Exps.Y,
 		C3.Plugins.Sprite.Acts.SetSize,
+		C3.Plugins.Audio.Cnds.IsTagPlaying,
+		C3.Plugins.Audio.Acts.SetPaused,
 		C3.Plugins.NinePatch.Acts.SetSize,
 		C3.Plugins.Text.Acts.SetPosToObject,
-		C3.Plugins.Spritefont2.Cnds.CompareInstanceVar,
-		C3.Plugins.Spritefont2.Acts.SetPosToObject,
 		C3.Plugins.NinePatch.Cnds.CompareInstanceVar,
 		C3.Plugins.NinePatch.Acts.SetPos,
 		C3.Plugins.Sprite.Exps.Width,
 		C3.Plugins.Sprite.Exps.Height,
+		C3.Plugins.Text.Acts.SetFontColor,
+		C3.Plugins.System.Exps.rgbex255,
 		C3.Plugins.System.Exps.dt,
 		C3.Plugins.System.Exps.zeropad,
 		C3.Plugins.System.Exps.left,
 		C3.Plugins.System.Acts.SetGroupActive,
-		C3.Plugins.System.Cnds.TriggerOnce,
-		C3.Plugins.System.Acts.ResetGlobals,
-		C3.Plugins.System.Acts.ResetPersisted,
+		C3.Plugins.Text.Acts.SetFontSize,
+		C3.Plugins.Text.Acts.SetHAlign,
 		C3.Plugins.Audio.Acts.Stop,
-		C3.Plugins.System.Acts.GoToLayout,
+		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.Dictionary.Exps.Get,
+		C3.Plugins.System.Cnds.Else,
+		C3.Plugins.System.Acts.ResetPersisted,
+		C3.Plugins.System.Acts.GoToLayout,
+		C3.Plugins.System.Acts.RestartLayout,
 		C3.Plugins.Sprite.Exps.AnimationFrame,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Acts.SetMirrored,
+		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Plugins.LocalStorage.Acts.CheckItemExists,
 		C3.Plugins.LocalStorage.Cnds.OnItemExists,
 		C3.Plugins.Dictionary.Acts.JSONLoad,
@@ -5507,24 +5513,19 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.LocalStorage.Acts.SetItem,
 		C3.Plugins.Dictionary.Exps.AsJSON,
 		C3.Plugins.System.Acts.SetLayerOpacity,
-		C3.Plugins.Audio.Cnds.IsTagPlaying,
-		C3.Plugins.Text.Acts.SetInstanceVar,
-		C3.Plugins.Text.Acts.SetFontSize,
-		C3.Plugins.Text.Acts.SetHAlign,
-		C3.Plugins.Text.Acts.SetVAlign,
-		C3.Plugins.Text.Acts.SetSize,
-		C3.Plugins.Text.Acts.SetFontColor,
+		C3.Plugins.Text.Acts.SetPos,
 		C3.Plugins.Sprite.Exps.ImagePointX,
 		C3.Plugins.Sprite.Exps.ImagePointY,
-		C3.Plugins.Text.Acts.SetPos,
-		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Json.Exps.Get,
+		C3.Plugins.Text.Cnds.IsOnLayer,
+		C3.Plugins.Sprite.Cnds.IsOnLayer,
 		C3.Plugins.AJAX.Acts.RequestFile,
 		C3.Plugins.AJAX.Cnds.OnComplete,
 		C3.Plugins.Json.Acts.Parse,
 		C3.Plugins.AJAX.Exps.LastData,
 		C3.Plugins.System.Acts.ToggleBoolVar,
 		C3.Plugins.Browser.Acts.Close,
+		C3.Plugins.Audio.Acts.SetVolume,
 		C3.Plugins.AJAX.Acts.Request,
 		C3.Plugins.Arr.Acts.JSONLoad,
 		C3.Plugins.Dictionary.Cnds.HasKey
@@ -5586,6 +5587,7 @@ self.C3_JsPropNameTable = [
 	{vfx_light: 0},
 	{x_icon: 0},
 	{minscroll: 0},
+	{coin: 0},
 	{start: 0},
 	{paused: 0},
 	{createTimeRand: 0},
@@ -5602,14 +5604,20 @@ self.C3_JsPropNameTable = [
 	{USER_SKIN_3: 0},
 	{USER_SKIN_4: 0},
 	{USER_SKIN_5: 0},
+	{USER_SKIN_6: 0},
+	{USER_SKIN_7: 0},
+	{USER_SKIN_8: 0},
+	{USER_SKIN_9: 0},
+	{USER_SKIN_10: 0},
 	{MIN_TIME_FACTOR: 0},
 	{MAX_TIME_FACTOR: 0},
 	{BONUS_TIMER_LEVEL: 0},
 	{BONUS_PAPARAZZI_LEVEL: 0},
 	{PAPARAZZI_FACTOR: 0},
 	{json_data_public: 0},
-	{j: 0},
 	{isShop: 0},
+	{audio: 0},
+	{language: 0},
 	{countryInit: 0},
 	{country: 0}
 ];
@@ -5747,6 +5755,7 @@ self.C3_ExpressionFuncs = [
 		() => 0.5,
 		() => 100,
 		() => "Game",
+		() => "",
 		() => "left",
 		() => 3,
 		() => "up",
@@ -5799,7 +5808,7 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 4);
+			return () => (n0.ExpObject() + 10);
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -5811,7 +5820,7 @@ self.C3_ExpressionFuncs = [
 			return () => (1 * Math.floor((v0.GetValue() / 10)));
 		},
 		() => 5,
-		() => "",
+		() => -10,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => Math.ceil(f0(0, 10));
@@ -5829,7 +5838,6 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 8);
 		},
-		() => -10,
 		() => "bonus",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -5848,15 +5856,22 @@ self.C3_ExpressionFuncs = [
 		() => 80,
 		() => 90,
 		() => 180,
+		() => "countdown",
 		() => "System",
 		() => 99,
 		() => 123,
 		() => "back",
+		() => 7,
+		() => "restart",
+		() => 8,
 		() => "over_label_score",
 		() => "over_score",
 		() => "over_label_highscore",
 		() => "over_highscore",
 		() => 4,
+		() => "over_label_coin",
+		() => "over_coin",
+		() => 6,
 		() => "pauselabel",
 		() => "resume",
 		() => "panel_over",
@@ -5864,6 +5879,16 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			return () => (n0.ExpObject() - (n1.ExpObject() / 2));
+		},
+		() => "timer",
+		() => 6000,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(104, 93, 137);
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0(211, 9, 9);
 		},
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -5873,7 +5898,6 @@ self.C3_ExpressionFuncs = [
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => (1000 * f0());
 		},
-		() => "timer",
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			const v1 = p._GetNode(1).GetVar();
@@ -5882,7 +5906,31 @@ self.C3_ExpressionFuncs = [
 			return () => ((f0(Math.floor((v1.GetValue() / 1000)), 2) + ":") + f2((Math.floor((v3.GetValue() % 1000))).toString(), 2));
 		},
 		() => -180,
-		() => "00:00",
+		() => 5000,
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("GAME OVER"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("TIMES UP"));
+		},
+		() => 316,
+		() => 15000,
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("PAUSE"));
+		},
+		() => "scorelabel",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -5902,7 +5950,7 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
-			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("PAUSE"));
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("COINS"));
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -5951,6 +5999,26 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("userSkin6");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("userSkin7");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("userSkin8");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("userSkin9");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("userSkin10");
+		},
+		p => {
+			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("minTimeFactor");
 		},
 		p => {
@@ -5976,6 +6044,11 @@ self.C3_ExpressionFuncs = [
 		() => "userSkin3",
 		() => "userSkin4",
 		() => "userSkin5",
+		() => "userSkin6",
+		() => "userSkin7",
+		() => "userSkin8",
+		() => "userSkin9",
+		() => "userSkin10",
 		() => "minTimeFactor",
 		() => "maxTimeFactor",
 		() => "paparazziFactor",
@@ -5983,107 +6056,31 @@ self.C3_ExpressionFuncs = [
 		() => "bonusTimerLevel",
 		() => "userHighScore",
 		() => "shop",
-		() => "close",
+		() => "audio",
+		() => "lang",
 		() => "play",
-		() => "MAIN UI",
 		() => "SHOP - SKINS",
-		() => "SHOP - UI",
 		() => "Catalog Interaction",
+		() => "LANGUAGE",
+		() => "Language Interaction",
+		() => "MAIN UI",
+		() => "SHOP - UI",
 		() => "Main UI Interaction",
 		() => "Catalog Save Game",
 		() => "music",
 		() => -15,
-		() => "Catalog Generation",
-		() => "num",
-		() => -100,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => and("label_state_skin", v0.GetValue());
-		},
-		() => "long",
-		() => 14,
-		() => -717750023016447,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => and("label_price_skin", v0.GetValue());
-		},
-		() => 10,
-		() => "label_state_timer",
-		() => "label_state_paparazzi",
-		() => "label_level_timer",
-		() => 18,
-		() => "label_level_paparazzi",
-		() => 16,
-		() => 32,
 		() => "Catalog Pin",
 		() => "coins",
-		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			const v2 = p._GetNode(2).GetVar();
-			const n3 = p._GetNode(3);
-			const v4 = p._GetNode(4).GetVar();
-			return () => and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("COINS")), " : "), v4.GetValue());
-		},
 		() => "skins",
 		() => "label_state_skin1",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) + 50);
-		},
-		p => {
-			const n0 = p._GetNode(0);
 			return () => n0.ExpObject(1);
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			return () => (n0.ExpObject(1) - (n1.ExpObject() / 2));
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) - 7);
-		},
-		() => "label_price_skin1",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) - 82);
-		},
-		() => "skin1",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) - 100);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) + 10);
-		},
 		() => "label_state_skin2",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(2) + 50);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(2);
-		},
-		() => "label_price_skin2",
-		() => "skin2",
 		() => "label_state_skin3",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(3) + 50);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject(3);
-		},
-		() => "label_price_skin3",
-		() => "skin3",
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject(1) - 96);
-		},
+		() => "label_state_timer",
+		() => "label_state_paparazzi",
 		() => "label_bonus",
 		() => "label_skins",
 		p => {
@@ -6102,30 +6099,80 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.0"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.1"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.2"));
+		},
+		() => "label_state_skin4",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.3"));
+		},
+		() => "label_state_skin5",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.4"));
+		},
+		() => "label_state_skin6",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.5"));
+		},
+		() => "label_state_skin7",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.6"));
+		},
+		() => "label_state_skin8",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.7"));
+		},
+		() => 9,
+		() => "label_state_skin9",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.8"));
+		},
+		() => 10,
+		() => "label_state_skin10",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("  ", n0.ExpObject("data.skin.9"));
+		},
+		p => {
+			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
 			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("BUY"));
 		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("data.skin.0");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("data.skin.1");
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => n0.ExpObject("data.skin.2");
-		},
+		() => "level_paparazzi",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
-			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("UPGRADE"));
+			const v4 = p._GetNode(4).GetVar();
+			return () => and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("PAPARAZZI")), " (Lv."), v4.GetValue()), ")");
 		},
+		() => "add_paparazzi",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			const n5 = p._GetNode(5);
+			return () => and((and("+", n0.ExpObject((and("data.paparazzi_bonus.level_", v1.GetValue()) + ".bonus"))) + " "), n2.ExpObject(n3.ExpObject(v4.GetValue()), n5.ExpObject("COINS")));
+		},
+		() => "next_paparazzi",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -6134,18 +6181,7 @@ self.C3_ExpressionFuncs = [
 			const v4 = p._GetNode(4).GetVar();
 			const n5 = p._GetNode(5);
 			const v6 = p._GetNode(6).GetVar();
-			const n7 = p._GetNode(7);
-			const n8 = p._GetNode(8);
-			const v9 = p._GetNode(9).GetVar();
-			const n10 = p._GetNode(10);
-			const n11 = p._GetNode(11);
-			const n12 = p._GetNode(12);
-			const v13 = p._GetNode(13).GetVar();
-			const n14 = p._GetNode(14);
-			const v15 = p._GetNode(15).GetVar();
-			const n16 = p._GetNode(16);
-			const v17 = p._GetNode(17).GetVar();
-			return () => and(and(and(and(and(and(and(and(and(and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("PAPARAZZI BONUS")), " Lv."), v4.GetValue()), " (+"), n5.ExpObject((and("data.paparazzi_bonus.level_", v6.GetValue()) + ".bonus"))), " "), n7.ExpObject(n8.ExpObject(v9.GetValue()), n10.ExpObject("COINS"))), ")"), "\n"), n11.ExpObject(n12.ExpObject(v13.GetValue()), n14.ExpObject("UPGRADE TO"))), " Lv."), (v15.GetValue() + 1)), " ("), n16.ExpObject((and("data.paparazzi_bonus.level_", (v17.GetValue() + 1)) + ".price"))), ")");
+			return () => and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("UPGRADE TO")), " Lv."), (v4.GetValue() + 1)), " ("), n5.ExpObject((and("data.paparazzi_bonus.level_", (v6.GetValue() + 1)) + ".price"))), ")");
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6154,6 +6190,26 @@ self.C3_ExpressionFuncs = [
 			const n3 = p._GetNode(3);
 			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("MAX LEVEL"));
 		},
+		() => "level_timer",
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			const v2 = p._GetNode(2).GetVar();
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			return () => and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("TIMER")), " (Lv."), v4.GetValue()), ")");
+		},
+		() => "add_timer",
+		p => {
+			const n0 = p._GetNode(0);
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			const n3 = p._GetNode(3);
+			const v4 = p._GetNode(4).GetVar();
+			const n5 = p._GetNode(5);
+			return () => and((and("+", n0.ExpObject((and("data.timer_bonus.level_", v1.GetValue()) + ".max_range"))) + " "), n2.ExpObject(n3.ExpObject(v4.GetValue()), n5.ExpObject("SECONDS")));
+		},
+		() => "next_timer",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -6162,47 +6218,34 @@ self.C3_ExpressionFuncs = [
 			const v4 = p._GetNode(4).GetVar();
 			const n5 = p._GetNode(5);
 			const v6 = p._GetNode(6).GetVar();
-			const n7 = p._GetNode(7);
-			const n8 = p._GetNode(8);
-			const v9 = p._GetNode(9).GetVar();
-			const n10 = p._GetNode(10);
-			return () => and(and(and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("PAPARAZZI BONUS")), " Lv."), v4.GetValue()), " (+"), n5.ExpObject((and("data.paparazzi_bonus.level_", v6.GetValue()) + ".bonus"))), " "), n7.ExpObject(n8.ExpObject(v9.GetValue()), n10.ExpObject("COINS"))), ")");
+			return () => and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("UPGRADE TO")), " Lv."), (v4.GetValue() + 1)), " ("), n5.ExpObject((and("data.timer_bonus.level_", (v6.GetValue() + 1)) + ".price"))), ")");
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
-			const v4 = p._GetNode(4).GetVar();
-			const n5 = p._GetNode(5);
-			const v6 = p._GetNode(6).GetVar();
-			const n7 = p._GetNode(7);
-			const n8 = p._GetNode(8);
-			const v9 = p._GetNode(9).GetVar();
-			const n10 = p._GetNode(10);
-			const n11 = p._GetNode(11);
-			const n12 = p._GetNode(12);
-			const v13 = p._GetNode(13).GetVar();
-			const n14 = p._GetNode(14);
-			const v15 = p._GetNode(15).GetVar();
-			const n16 = p._GetNode(16);
-			const v17 = p._GetNode(17).GetVar();
-			return () => and(and(and(and(and(and(and(and(and(and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("TIMER BONUS")), " Lv."), v4.GetValue()), " (+"), n5.ExpObject((and("data.timer_bonus.level_", v6.GetValue()) + ".max_range"))), " "), n7.ExpObject(n8.ExpObject(v9.GetValue()), n10.ExpObject("SECONDS"))), ")"), "\n"), n11.ExpObject(n12.ExpObject(v13.GetValue()), n14.ExpObject("UPGRADE TO"))), " Lv."), (v15.GetValue() + 1)), " ("), n16.ExpObject((and("data.timer_bonus.level_", (v17.GetValue() + 1)) + ".price"))), ")");
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("MAX"));
 		},
+		() => "Language Save Game",
+		() => "label_lang",
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
-			const v4 = p._GetNode(4).GetVar();
-			const n5 = p._GetNode(5);
-			const v6 = p._GetNode(6).GetVar();
-			const n7 = p._GetNode(7);
-			const n8 = p._GetNode(8);
-			const v9 = p._GetNode(9).GetVar();
-			const n10 = p._GetNode(10);
-			return () => and(and(and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("TIMER BONUS")), " Lv."), v4.GetValue()), " (+"), n5.ExpObject((and("data.timer_bonus.level_", v6.GetValue()) + ".max_range"))), " "), n7.ExpObject(n8.ExpObject(v9.GetValue()), n10.ExpObject("SECONDS"))), ")");
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("LANGUAGE"));
 		},
+		() => "label",
+		() => "EN",
+		() => "DE",
+		() => "FR",
+		() => "IT",
+		() => "KR",
+		() => "PT",
+		() => "ES",
+		() => "TR",
+		() => "AR",
 		() => "Catalog Pricing",
 		() => "catalog_price",
 		p => {
@@ -6242,6 +6285,20 @@ self.C3_ExpressionFuncs = [
 		},
 		p => {
 			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.0");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.1");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.2");
+		},
+		() => "close",
+		() => -100,
+		p => {
+			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
@@ -6252,28 +6309,15 @@ self.C3_ExpressionFuncs = [
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
-			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("SKINS"));
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("SKIN"));
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
 			const v2 = p._GetNode(2).GetVar();
 			const n3 = p._GetNode(3);
-			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("BONUS"));
+			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("UPGRADE"));
 		},
-		() => "US",
-		() => "ID",
-		() => "ES",
-		() => "IT",
-		() => "DE",
-		() => "PT",
-		() => "AE",
-		() => 6,
-		() => "SA",
-		() => "KR",
-		() => 7,
-		() => "TR",
-		() => 8,
 		() => "dictionary",
 		() => "languages",
 		() => "location",
