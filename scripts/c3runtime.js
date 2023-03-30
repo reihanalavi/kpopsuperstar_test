@@ -6079,6 +6079,13 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "label_state_skin2",
 		() => "label_state_skin3",
+		() => "label_state_skin4",
+		() => "label_state_skin5",
+		() => "label_state_skin6",
+		() => "label_state_skin7",
+		() => "label_state_skin8",
+		() => "label_state_skin9",
+		() => "label_state_skin10",
 		() => "label_state_timer",
 		() => "label_state_paparazzi",
 		() => "label_bonus",
@@ -6109,39 +6116,32 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.2"));
 		},
-		() => "label_state_skin4",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.3"));
 		},
-		() => "label_state_skin5",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.4"));
 		},
-		() => "label_state_skin6",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.5"));
 		},
-		() => "label_state_skin7",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.6"));
 		},
-		() => "label_state_skin8",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.7"));
 		},
 		() => 9,
-		() => "label_state_skin9",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.8"));
 		},
 		() => 10,
-		() => "label_state_skin10",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => and("  ", n0.ExpObject("data.skin.9"));
@@ -6175,13 +6175,8 @@ self.C3_ExpressionFuncs = [
 		() => "next_paparazzi",
 		p => {
 			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			const v2 = p._GetNode(2).GetVar();
-			const n3 = p._GetNode(3);
-			const v4 = p._GetNode(4).GetVar();
-			const n5 = p._GetNode(5);
-			const v6 = p._GetNode(6).GetVar();
-			return () => and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("UPGRADE TO")), " Lv."), (v4.GetValue() + 1)), " ("), n5.ExpObject((and("data.paparazzi_bonus.level_", (v6.GetValue() + 1)) + ".price"))), ")");
+			const v1 = p._GetNode(1).GetVar();
+			return () => and("   ", n0.ExpObject((and("data.paparazzi_bonus.level_", (v1.GetValue() + 1)) + ".price")));
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6212,13 +6207,8 @@ self.C3_ExpressionFuncs = [
 		() => "next_timer",
 		p => {
 			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			const v2 = p._GetNode(2).GetVar();
-			const n3 = p._GetNode(3);
-			const v4 = p._GetNode(4).GetVar();
-			const n5 = p._GetNode(5);
-			const v6 = p._GetNode(6).GetVar();
-			return () => and(and(and(and(and(n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("UPGRADE TO")), " Lv."), (v4.GetValue() + 1)), " ("), n5.ExpObject((and("data.timer_bonus.level_", (v6.GetValue() + 1)) + ".price"))), ")");
+			const v1 = p._GetNode(1).GetVar();
+			return () => and("   ", n0.ExpObject((and("data.timer_bonus.level_", (v1.GetValue() + 1)) + ".price")));
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -6294,6 +6284,34 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject("data.skin.2");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.3");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.4");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.5");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.6");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.7");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.8");
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => n0.ExpObject("data.skin.9");
 		},
 		() => "close",
 		() => -100,
