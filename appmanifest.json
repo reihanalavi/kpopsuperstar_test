@@ -1,7 +1,7 @@
 {
-	"name": "tes",
-	"short_name": "tes",
-	"description": "",
+	"name": "Kpop Superstars",
+	"short_name": "Kpop Superstars",
+	"description": "Game Kpop Superstars",
 	"start_url": "index.html",
 	"display": "fullscreen",
 	"orientation": "landscape",
