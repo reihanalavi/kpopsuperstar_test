@@ -5426,6 +5426,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.System.Acts.SetLayerScale,
+		C3.Plugins.Sprite.Acts.SetPos,
+		C3.Plugins.Sprite.Exps.X,
+		C3.Plugins.Sprite.Exps.Y,
+		C3.Plugins.Sprite.Acts.SetY,
 		C3.Plugins.Sprite.Cnds.IsOverlapping,
 		C3.Plugins.Sprite.Acts.SetInstanceVar,
 		C3.Plugins.Sprite.Exps.UID,
@@ -5438,15 +5442,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
-		C3.Behaviors.TileMovement.Acts.SimulateControl,
+		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
 		C3.Plugins.Sprite.Cnds.CompareOpacity,
-		C3.Plugins.Keyboard.Cnds.OnKey,
 		C3.Plugins.System.Cnds.EveryTick,
 		C3.Plugins.System.Acts.ScrollY,
-		C3.Plugins.Sprite.Exps.Y,
-		C3.Plugins.Sprite.Acts.SetPos,
-		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.TiledBg.Cnds.CompareY,
 		C3.Plugins.System.Exps.viewporttop,
 		C3.Plugins.TiledBg.Cnds.IsOnScreen,
@@ -5461,9 +5461,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.AnimationName,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
 		C3.Plugins.Sprite.Acts.SetX,
-		C3.Plugins.Sprite.Acts.SetY,
 		C3.Plugins.Sprite.Cnds.CompareY,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.Sprite.Acts.SetVisible,
@@ -5500,10 +5498,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.ResetPersisted,
 		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Acts.RestartLayout,
-		C3.Plugins.Sprite.Exps.AnimationFrame,
+		C3.Behaviors.TileMovement.Acts.SimulateControl,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Acts.SetMirrored,
 		C3.Plugins.Sprite.Cnds.IsOnScreen,
+		C3.Plugins.Sprite.Exps.AnimationFrame,
 		C3.Plugins.LocalStorage.Acts.CheckItemExists,
 		C3.Plugins.LocalStorage.Cnds.OnItemExists,
 		C3.Plugins.Dictionary.Acts.JSONLoad,
@@ -5588,6 +5587,8 @@ self.C3_JsPropNameTable = [
 	{x_icon: 0},
 	{minscroll: 0},
 	{coin: 0},
+	{isTouching: 0},
+	{tile: 0},
 	{start: 0},
 	{paused: 0},
 	{createTimeRand: 0},
@@ -5596,6 +5597,7 @@ self.C3_JsPropNameTable = [
 	{tileNum: 0},
 	{pos: 0},
 	{paparazziRoll: 0},
+	{stepDeleted: 0},
 	{USER_HIGH_SCORE: 0},
 	{USER_COINS: 0},
 	{USER_SKIN_USED: 0},
@@ -5749,21 +5751,30 @@ self.C3_ExpressionFuncs = [
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
 		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + 16);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() + (230 - (16 * 4)));
+		},
 		() => "Game Over",
 		() => 20,
 		() => 93,
 		() => 0.5,
 		() => 100,
 		() => "Game",
-		() => "",
 		() => "left",
+		() => 999,
+		() => "",
 		() => 3,
 		() => "up",
 		() => "right",
 		() => "down",
 		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 16);
+			const v0 = p._GetNode(0).GetVar();
+			return () => v0.GetValue();
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -5778,10 +5789,6 @@ self.C3_ExpressionFuncs = [
 			return () => (n0.ExpObject() + 680);
 		},
 		() => "score",
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => v0.GetValue();
-		},
 		() => "state1",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
@@ -5809,10 +5816,6 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() + 10);
-		},
-		p => {
-			const n0 = p._GetNode(0);
-			return () => (n0.ExpObject() + 230);
 		},
 		() => 50,
 		p => {
@@ -5953,16 +5956,16 @@ self.C3_ExpressionFuncs = [
 			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("COINS"));
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			return () => ((n0.ExpObject() + 1) % 4);
-		},
-		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => f0(1, 2, 3, 4, 5);
 		},
 		p => {
 			const n0 = p._GetNode(0);
 			return () => (n0.ExpObject() - 10);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => ((n0.ExpObject() + 1) % 4);
 		},
 		() => "user-data",
 		p => {
