@@ -5490,19 +5490,20 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.Text.Acts.SetFontSize,
 		C3.Plugins.Text.Acts.SetHAlign,
+		C3.Plugins.System.Acts.ResetPersisted,
 		C3.Plugins.Audio.Acts.Stop,
+		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.Dictionary.Exps.Get,
 		C3.Plugins.System.Cnds.Else,
-		C3.Plugins.System.Acts.ResetPersisted,
-		C3.Plugins.System.Acts.GoToLayout,
 		C3.Plugins.System.Acts.RestartLayout,
 		C3.Behaviors.TileMovement.Acts.SimulateControl,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.Sprite.Acts.SetMirrored,
 		C3.Plugins.Sprite.Cnds.IsOnScreen,
 		C3.Plugins.Sprite.Exps.AnimationFrame,
+		C3.Plugins.Keyboard.Cnds.OnKey,
 		C3.Plugins.LocalStorage.Acts.CheckItemExists,
 		C3.Plugins.LocalStorage.Cnds.OnItemExists,
 		C3.Plugins.Dictionary.Acts.JSONLoad,
@@ -5910,6 +5911,8 @@ self.C3_ExpressionFuncs = [
 			return () => ((f0(Math.floor((v1.GetValue() / 1000)), 2) + ":") + f2((Math.floor((v3.GetValue() % 1000))).toString(), 2));
 		},
 		() => -180,
+		() => 316,
+		() => 15000,
 		() => 5000,
 		p => {
 			const n0 = p._GetNode(0);
@@ -5925,8 +5928,6 @@ self.C3_ExpressionFuncs = [
 			const n3 = p._GetNode(3);
 			return () => n0.ExpObject(n1.ExpObject(v2.GetValue()), n3.ExpObject("TIMES UP"));
 		},
-		() => 316,
-		() => 15000,
 		p => {
 			const n0 = p._GetNode(0);
 			const n1 = p._GetNode(1);
@@ -5967,6 +5968,10 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => ((n0.ExpObject() + 1) % 4);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 120);
 		},
 		() => "user-data",
 		p => {
